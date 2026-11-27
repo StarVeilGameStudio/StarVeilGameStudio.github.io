@@ -1,0 +1,15 @@
+SYSTEM — protótipo 1.0
+1. Extraia o ZIP.
+2. Para instalar como PWA, publique os arquivos em uma hospedagem HTTPS estática (por exemplo, GitHub Pages) ou sirva localmente por um servidor HTTPS.
+3. Abra o endereço no Chrome Android > menu ⋮ > Adicionar à tela inicial / Instalar app.
+4. O progresso fica salvo no armazenamento local do navegador. Use HISTÓRICO > EXPORTAR BACKUP regularmente.
+
+Regras iniciais:
+- XP por dificuldade: Fácil 10, Normal 25, Difícil 50, Épica 100, Lendária 200.
+- Cada 100 XP acumulados = 1 nível.
+- Patentes: E níveis 1–4; D 5–9; C 10–14; B 15–19; A 20–24; S a partir do 25.
+- Cada missão concluída adiciona +1 ao atributo escolhido.
+- Missões diárias: sequência aumenta ao concluir em dias consecutivos; se não forem concluídas no dia, a sequência zera na próxima abertura.
+- Missões únicas: aparecem até serem concluídas e não têm sequência.
+
+É um protótipo inicial; não há conta, sincronização em nuvem ou notificações push.

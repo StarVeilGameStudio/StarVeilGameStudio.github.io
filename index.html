@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07101f">
+<meta name="description" content="SYSTEM — seu RPG pessoal de evolução e hábitos.">
+<link rel="manifest" href="manifest.webmanifest">
+<title>SYSTEM — Hunter Status</title>
+<style>
+:root{--bg:#050b16;--panel:#0b1628;--panel2:#0e1d33;--line:#1d3656;--blue:#63aaff;--cyan:#8de8ff;--muted:#8aa4c6;--white:#e8f3ff;--green:#7df0bd;--red:#ff7288;--gold:#ffd47c}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#17365e 0%,#091426 38%,var(--bg) 75%);color:var(--white);font:15px system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer}
+.wrap{max-width:760px;margin:auto;padding:18px 15px 100px}
+header{display:flex;align-items:center;justify-content:space-between;margin:5px 0 18px}
+.brand{letter-spacing:.22em;font-weight:900;color:var(--cyan);font-size:13px;text-shadow:0 0 16px #54baff}
+.status{font-size:10px;letter-spacing:.16em;color:var(--green);border:1px solid #286b5c;padding:6px 9px;border-radius:3px}
+.panel{background:linear-gradient(145deg,rgba(15,31,54,.96),rgba(7,16,31,.96));border:1px solid var(--line);box-shadow:0 12px 35px #0005,inset 0 1px #ffffff0a;border-radius:10px;padding:16px;margin-bottom:13px;position:relative;overflow:hidden}
+.panel:before{content:"";position:absolute;inset:0 auto 0 0;width:2px;background:linear-gradient(transparent,var(--blue),transparent);opacity:.7}
+.kicker{font-size:10px;letter-spacing:.2em;color:var(--muted);font-weight:700}
+.hero{text-align:center;padding:23px 16px 18px}
+.rank{font-size:42px;line-height:1.1;font-weight:900;letter-spacing:.12em;color:#a8d5ff;text-shadow:0 0 25px #329aff88;margin:8px 0 2px}
+.level{font-size:15px;letter-spacing:.22em;color:var(--cyan);font-weight:800}
+.sub{font-size:11px;color:var(--muted);letter-spacing:.12em;margin-top:6px}
+.xphead{display:flex;justify-content:space-between;color:#b9d2ee;font-size:11px;margin:18px 0 7px}
+.track{height:9px;background:#1a2b43;border:1px solid #294463;border-radius:20px;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,#3988ed,#8de8ff);box-shadow:0 0 14px #4aaaff;transition:width .3s}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.stat{background:#0a192d;border:1px solid #1a3452;border-radius:7px;padding:11px 9px}
+.statrow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.stat b{font-size:12px;letter-spacing:.1em;color:#b9dcff}.stat strong{font-size:18px;color:#fff}
+.stat .track{height:5px}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+h2{font-size:13px;letter-spacing:.17em;margin:0;color:#c8e5ff}
+.small{font-size:11px;color:var(--muted)}
+.btn{border:1px solid #326394;background:linear-gradient(180deg,#17395f,#102744);color:#dff2ff;padding:10px 13px;border-radius:5px;font-weight:700;font-size:12px}
+.btn.primary{background:linear-gradient(180deg,#2877c9,#15508d);border-color:#63b9ff}
+.btn.ghost{background:#0a192b;border-color:#29415e;color:#a9c4e4}
+.btn.danger{border-color:#71364a;color:#ff9eae;background:#291421}
+.quest{display:flex;gap:11px;align-items:center;padding:12px 0;border-top:1px solid #1b3049}
+.quest:first-of-type{border-top:0}
+.questmain{flex:1;min-width:0}.questtitle{font-weight:650;font-size:14px;overflow-wrap:anywhere}
+.questmeta{font-size:10px;color:var(--muted);margin-top:4px}
+.reward{font-size:11px;color:var(--green);white-space:nowrap;font-weight:800}
+.done .questtitle{text-decoration:line-through;color:#7990ac}
+.check{width:25px;height:25px;border:1px solid #47749e;background:#0b1a2e;border-radius:50%;color:var(--green);font-weight:900;flex:none}
+.done .check{background:#164d43;border-color:#53cda9}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+label{display:block;color:var(--muted);font-size:10px;letter-spacing:.1em;margin:0 0 5px}
+input,select{width:100%;background:#071426;border:1px solid #29415e;color:var(--white);border-radius:5px;padding:11px;outline:none}
+input:focus,select:focus{border-color:var(--blue)}
+.full{grid-column:1/-1}
+.rowbuttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.empty{padding:20px;text-align:center;color:var(--muted);font-size:12px;border:1px dashed #29415e;border-radius:6px}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:#07101ff2;border-top:1px solid #1c3552;display:flex;justify-content:center;gap:8px;padding:9px 10px calc(9px + env(safe-area-inset-bottom));backdrop-filter:blur(12px);z-index:5}
+.tabs button{background:transparent;border:1px solid transparent;color:#8ca8c9;padding:9px 13px;border-radius:5px;font-size:11px;letter-spacing:.08em}
+.tabs button.active{color:var(--cyan);border-color:#2b5c8a;background:#102641}
+.view{display:none}.view.active{display:block}
+.logitem{padding:9px 0;border-top:1px solid #1b3049;font-size:12px;display:flex;justify-content:space-between;gap:10px}
+.toast{position:fixed;top:15px;left:50%;transform:translateX(-50%);background:#102c49;border:1px solid #57b9ff;color:#e9f8ff;padding:11px 16px;border-radius:5px;box-shadow:0 8px 30px #0008;z-index:10;display:none;font-size:12px;max-width:90vw;text-align:center}
+.note{font-size:10px;line-height:1.5;color:#7892b2;margin-top:10px}
+@media(max-width:390px){.grid{gap:6px}.stat{padding:9px 7px}.rank{font-size:36px}.tabs{gap:0}.tabs button{padding:9px 10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand">◈ SYSTEM // HUNTER INTERFACE</div><div class="status">● ONLINE</div></header>
+<main>
+<section id="dashboard" class="view active">
+ <div class="panel hero">
+  <div class="kicker">HUNTER STATUS</div>
+  <div class="rank" id="rank">E</div><div class="level" id="level">LEVEL 01</div>
+  <div class="sub" id="hunterTitle">AWAKENED HUNTER</div>
+  <div class="xphead"><span>EXPERIÊNCIA</span><span id="xpText">0 / 100 XP</span></div>
+  <div class="track"><div class="fill" id="xpFill" style="width:0%"></div></div>
+ </div>
+ <div class="panel">
+  <div class="sectionhead"><h2>ATRIBUTOS</h2><span class="small">PONTOS DE STATUS</span></div>
+  <div class="grid" id="stats"></div>
+  <div class="note">Atributos aumentam quando você conclui missões vinculadas a eles. Os valores são um indicador de progresso, não uma avaliação física ou médica.</div>
+ </div>
+ <div class="panel">
+  <div class="sectionhead"><h2>MISSÕES DE HOJE</h2><span class="small" id="questCount">0 concluídas</span></div>
+  <div id="todayQuests"></div>
+ </div>
+ <div class="panel">
+  <div class="sectionhead"><h2>REGISTRO RECENTE</h2><span class="small">HISTÓRICO</span></div>
+  <div id="recent"></div>
+ </div>
+</section>
+<section id="quests" class="view">
+ <div class="panel">
+  <div class="sectionhead"><h2>CRIAR MISSÃO</h2><span class="small">CUSTOM QUEST</span></div>
+  <form id="questForm">
+   <div class="formgrid">
+    <div class="full"><label for="qname">NOME DA MISSÃO</label><input id="qname" maxlength="70" placeholder="Ex.: Treino de musculação" required></div>
+    <div><label for="difficulty">DIFICULDADE</label><select id="difficulty"><option value="easy">Fácil · 10 XP</option><option value="normal" selected>Normal · 25 XP</option><option value="hard">Difícil · 50 XP</option><option value="epic">Épica · 100 XP</option><option value="legendary">Lendária · 200 XP</option></select></div>
+    <div><label for="attribute">ATRIBUTO</label><select id="attribute"><option value="STR">STR · Força</option><option value="AGI">AGI · Agilidade</option><option value="VIT">VIT · Vitalidade</option><option value="INT">INT · Inteligência</option><option value="WIS">WIS · Sabedoria</option><option value="SEN">SEN · Percepção</option></select></div>
+    <div class="full"><label for="frequency">FREQUÊNCIA</label><select id="frequency"><option value="daily">Diária (sequência)</option><option value="once">Única (não recorrente)</option></select></div>
+   </div>
+   <div class="rowbuttons"><button class="btn primary" type="submit">＋ ADICIONAR MISSÃO</button></div>
+  </form>
+ </div>
+ <div class="panel">
+  <div class="sectionhead"><h2>SEU QUADRO DE MISSÕES</h2><span class="small" id="allCount"></span></div>
+  <div id="allQuests"></div>
+  <div class="note">Você define o conteúdo das missões. A dificuldade determina o XP recebido. Missões diárias não concluídas até o fim do dia perdem a sequência daquela missão.</div>
+ </div>
+</section>
+<section id="history" class="view">
+ <div class="panel"><div class="sectionhead"><h2>HISTÓRICO DE CAÇA</h2><span class="small">EVENT LOG</span></div><div id="historyList"></div></div>
+ <div class="panel"><div class="sectionhead"><h2>DADOS DO HUNTER</h2></div><div class="rowbuttons"><button class="btn ghost" id="exportBtn">EXPORTAR BACKUP</button><label class="btn ghost" for="importFile">IMPORTAR BACKUP</label><input id="importFile" type="file" accept="application/json" style="display:none"></div><div class="note">Seu progresso fica salvo neste dispositivo. Exporte um backup para não perder seus dados ao limpar o navegador ou trocar de celular.</div></div>
+</section>
+<section id="settings" class="view">
+ <div class="panel">
+  <div class="sectionhead"><h2>CONFIGURAÇÕES</h2><span class="small">SYSTEM CONTROL</span></div>
+  <p class="small">Patentes e progressão inicial</p>
+  <p style="font-size:13px;line-height:1.6">Patentes: E → D → C → B → A → S.<br>O nível sobe a cada 100 XP acumulados. A patente evolui por nível: E (1–4), D (5–9), C (10–14), B (15–19), A (20–24), S (25+).</p>
+  <button class="btn ghost" id="resetBtn">REINICIAR PROGRESSO</button>
+  <div class="note">Atenção: reiniciar apaga missões, XP, atributos e histórico deste dispositivo. Faça um backup antes.</div>
+ </div>
+</section>
+</main>
+</div>
+<nav class="tabs">
+<button class="active" data-view="dashboard">STATUS</button><button data-view="quests">MISSÕES</button><button data-view="history">HISTÓRICO</button><button data-view="settings">SYSTEM</button>
+</nav>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body></html>

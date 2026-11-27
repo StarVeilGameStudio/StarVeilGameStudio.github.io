@@ -1,0 +1,10 @@
+{
+  "name": "SYSTEM — Hunter Status",
+  "short_name": "SYSTEM",
+  "description": "Seu RPG pessoal de evolução e hábitos.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050b16",
+  "theme_color": "#07101f",
+  "orientation": "portrait"
+}
